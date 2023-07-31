@@ -37,7 +37,8 @@ export const Home = () => {
             let response = await fetch(`${process.env.REACT_APP_API}?q=${query}`)
 
             if (!response.ok) {
-                throw new Error(`Návratový kód ${response.status}`)
+                let error = await response.json()
+                throw new Error(`Návratový kód ${response.status} (${error.detail})`)
             }
             let result = await response.json()
             setResult(result)
