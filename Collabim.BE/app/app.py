@@ -15,8 +15,10 @@ app.add_middleware(
 @app.get("/api/search")
 def get_search(q: str = ""):
     try:
-        return {"items": [{"url": i.url, "title": i.title, "description": i.description} for i in search(q)]}    
+        
+        return {"items": [{"url": i.url, "title": i.title, "description": i.description} for i in search(q, advanced=True)]}    
     except HTTPError as err:
         raise HTTPException(status_code=err.response.status_code) 
-    except:
+    except Exception as ex:
+        print(ex)
         raise HTTPException(status_code=500) 
