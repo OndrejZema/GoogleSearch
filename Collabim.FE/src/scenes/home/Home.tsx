@@ -3,10 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap'
 import { ResultPanel } from './components/ResultPanel'
-import { setSyntheticTrailingComments } from 'typescript'
 
-interface IResult {
-    items: Array<string>
+export interface IItem{
+    url: string 
+    title: string 
+    description: string
+}
+
+
+export interface IResult {
+    items: Array<{url: string, title: string, description: string}>
 }
 
 
@@ -18,11 +24,6 @@ export const Home = () => {
     const [result, setResult] = React.useState<IResult>()
     const [errorText, setErrorText] = React.useState<string>("")
 
-    React.useEffect(() => {
-        if (result !== undefined) {
-            setLoading(false)
-        }
-    }, [result])
     React.useEffect(()=>{
         setQuery("")
     }, [resultQuery])
@@ -30,6 +31,7 @@ export const Home = () => {
     const handleSearch = async () => {
         try {
             setResultQuery(query)
+            setResult(undefined)
             setLoading(true)
             setErrorText("")
             let response = await fetch(`${process.env.REACT_APP_API}?q=${query}`)
@@ -39,10 +41,11 @@ export const Home = () => {
             }
             let result = await response.json()
             setResult(result)
+            setLoading(false)
         }
         catch (err: any) {
             console.log(err)
-
+            
             setLoading(false)
             setErrorText(err.toString())
             setQuery(resultQuery)

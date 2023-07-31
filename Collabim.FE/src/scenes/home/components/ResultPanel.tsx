@@ -2,10 +2,11 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { IItem } from '../Home'
 
 interface IProps {
     query: string
-    items?: Array<string>
+    items?: Array<IItem>
 }
 
 export const ResultPanel = (props: IProps) => {
@@ -26,11 +27,12 @@ export const ResultPanel = (props: IProps) => {
                 <div className='p-3'>
                     <h4>Výsledky pro vyhledávání: <i>{props.query}</i></h4>
                     {props.items!.map((item, index) => {
-                        return <a href={item}
+                        return <a href={item.url}
                             target='_blank'
-                            key={`${index}-${item}`}
+                            key={`${index}-${item.url}`}
                             className='border p-2 mb-1 rounded d-block'>
-                            {item}
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
                         </a>
                     })}
                     <Button onClick={handleDownloadBtnClick}><FontAwesomeIcon icon={faDownload} className="me-1" /> Stáhnout výsledky</Button>
