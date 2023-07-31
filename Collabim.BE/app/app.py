@@ -19,6 +19,3 @@ def get_search(q: str = ""):
         raise HTTPException(status_code=err.response.status_code) 
     except:
         raise HTTPException(status_code=500) 
-@app.get("/api/test")
-def get_test():
-    return {"msg": "test"}
