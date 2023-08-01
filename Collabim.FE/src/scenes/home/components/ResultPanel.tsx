@@ -13,7 +13,7 @@ export const ResultPanel = (props: IProps) => {
 
     const handleDownloadBtnClick = () =>{
         const downloadLink = document.createElement("a")
-        downloadLink.href = URL.createObjectURL(new Blob([JSON.stringify(props.items)],{type: 'application/json'}))
+        downloadLink.href = URL.createObjectURL(new Blob([JSON.stringify(props.items, null, "\t")],{type: 'application/json'}))
         downloadLink.download = 'result.json'
         document.body.appendChild(downloadLink)
         downloadLink.click()
